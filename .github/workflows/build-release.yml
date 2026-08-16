@@ -23,10 +23,14 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           # This specifies the Gradle version since the repository might not have a gradlew wrapper script included
           gradle-version: '8.7'
+          # Disable cache-read/write because GitHub cache API is having an outage (400 / 503 errors)
+          cache-read-only: false
+          cache-write-only: false
+          cache-disabled: true
 
       - name: Decode Keystore
         env:
