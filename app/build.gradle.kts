@@ -11,12 +11,12 @@ plugins {
 
 android {
   namespace = "com.hyper.note"
-  compileSdk { version = release(36) { minorApiLevel = 1 } }
+  compileSdk = 35
 
   defaultConfig {
     applicationId = "com.hyper.note"
     minSdk = 24
-    targetSdk = 36
+    targetSdk = 35
     versionCode = 1
     versionName = "3.2.55"
 
