@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group 
+        android:pivotX="54" 
+        android:pivotY="54" 
+        android:scaleX="0.6" 
+        android:scaleY="0.6"
+        android:translateX="3"
+        android:translateY="2">
+        <!-- Subtle shadow for the paper -->
+        <path
+            android:fillColor="#33000000"
+            android:pathData="M 34 26 L 70 26 L 84 40 L 84 78 C 84 82.4 80.4 86 76 86 L 34 86 C 29.6 86 26 82.4 26 78 L 26 34 C 26 29.6 29.6 26 34 26 Z" />
+
+        <!-- Main black paper -->
+        <path
+            android:fillColor="#000000"
+            android:pathData="M 30 22 L 66 22 L 80 36 L 80 74 C 80 78.4 76.4 82 72 82 L 30 82 C 25.6 82 22 78.4 22 74 L 22 30 C 22 25.6 25.6 22 30 22 Z" />
+
+        <!-- Folded corner (Top Right) -->
+        <path
+            android:fillColor="#333333"
+            android:pathData="M 66 22 L 66 32 C 66 34.2 67.8 36 70 36 L 80 36 Z" />
+
+        <!-- Checkboxes (Circles) -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 36 39 C 37.65 39 39 40.35 39 42 C 39 43.65 37.65 45 36 45 C 34.35 45 33 43.65 33 42 C 33 40.35 34.35 39 36 39 Z" />
+        
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 36 51 C 37.65 51 39 52.35 39 54 C 39 55.65 37.65 57 36 57 C 34.35 57 33 55.65 33 54 C 33 52.35 34.35 51 36 51 Z" />
+
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 36 63 C 37.65 63 39 64.35 39 66 C 39 67.65 37.65 69 36 69 C 34.35 69 33 67.65 33 66 C 33 64.35 34.35 63 36 63 Z" />
+
+        <!-- Primary Theme color lines -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 44 40 L 66 40 C 67.1 40 68 40.9 68 42 C 68 43.1 67.1 44 66 44 L 44 44 C 42.9 44 42 43.1 42 42 C 42 40.9 42.9 40 44 40 Z" />
+
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 44 52 L 66 52 C 67.1 52 68 52.9 68 54 C 68 55.1 67.1 56 66 56 L 44 56 C 42.9 56 42 55.1 42 54 C 42 52.9 42.9 52 44 52 Z" />
+
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 44 64 L 56 64 C 57.1 64 58 64.9 58 66 C 58 67.1 57.1 68 56 68 L 44 68 C 42.9 68 42 67.1 42 66 C 42 64.9 42.9 64 44 64 Z" />
+    </group>
+
+</vector>

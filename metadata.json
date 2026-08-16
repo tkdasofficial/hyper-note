@@ -1,0 +1,6 @@
+{
+  "name": "Hyper Note",
+  "description": "A lightweight, ultra-responsive, mobile-first note-taking application designed for rapid capture and markdown support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
