@@ -27,7 +27,7 @@ android {
       if (keystorePath != null && file(keystorePath).exists()) {
         storeFile = file(keystorePath)
         storePassword = System.getenv("STORE_PASSWORD")
-        keyAlias = "upload"
+        keyAlias = System.getenv("KEY_ALIAS") ?: "hnkey0"
         keyPassword = System.getenv("KEY_PASSWORD")
       } else {
         // Fallback to debug keystore if release secrets are missing so CI can still build an unsigned/debug APK
