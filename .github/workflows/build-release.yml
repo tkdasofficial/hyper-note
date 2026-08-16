@@ -26,7 +26,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           # This specifies the Gradle version since the repository might not have a gradlew wrapper script included
-          gradle-version: '8.7'
+          gradle-version: '8.9'
           # Disable cache-read/write because GitHub cache API is having an outage (400 / 503 errors)
           cache-read-only: false
           cache-write-only: false
@@ -47,6 +47,7 @@ jobs:
         env:
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: gradle assembleRelease
 
       - name: Upload Release APK
