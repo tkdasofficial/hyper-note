@@ -138,6 +138,12 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun pinTasks(ids: List<Int>, pin: Boolean) {
+        viewModelScope.launch {
+            repository.updateTaskPinnedStatus(ids, pin)
+        }
+    }
+
     // Folders
     fun addFolder(name: String) {
         viewModelScope.launch {

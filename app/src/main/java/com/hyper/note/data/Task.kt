@@ -8,5 +8,6 @@ data class Task(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val text: String = "",
     val isCompleted: Boolean = false,
+    val isPinned: Boolean = false,
     val lastModified: Long = System.currentTimeMillis()
 )

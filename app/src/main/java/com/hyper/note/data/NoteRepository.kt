@@ -51,6 +51,7 @@ class NoteRepository(
     suspend fun insertTask(task: Task) = taskDao.insert(task)
     suspend fun updateTask(task: Task) = taskDao.update(task)
     suspend fun deleteTasks(ids: List<Int>) = taskDao.deleteTasks(ids)
+    suspend fun updateTaskPinnedStatus(ids: List<Int>, isPinned: Boolean) = taskDao.updatePinnedStatus(ids, isPinned)
     
     // Folders
     suspend fun insertFolder(folder: Folder) = folderDao.insert(folder)

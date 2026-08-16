@@ -10,6 +10,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +25,9 @@ import com.hyper.note.viewmodel.NoteViewModel
 @Composable
 fun TasksScreen(viewModel: NoteViewModel) {
     val tasks by viewModel.allTasks.collectAsStateWithLifecycle()
+    val pinnedTasks = tasks.filter { it.isPinned }
+    val regularTasks = tasks.filter { !it.isPinned }
+
     var selectedTaskIds by remember { mutableStateOf(setOf<Int>()) }
     val isSelectionMode = selectedTaskIds.isNotEmpty()
 
@@ -40,6 +44,13 @@ fun TasksScreen(viewModel: NoteViewModel) {
                         }
                     },
                     actions = {
+                        val areAllSelectedPinned = selectedTaskIds.all { id -> tasks.find { it.id == id }?.isPinned == true }
+                        IconButton(onClick = {
+                            viewModel.pinTasks(selectedTaskIds.toList(), !areAllSelectedPinned)
+                            selectedTaskIds = emptySet()
+                        }) {
+                            Icon(Icons.Default.PushPin, contentDescription = if (areAllSelectedPinned) "Unpin selected" else "Pin selected")
+                        }
                         IconButton(onClick = {
                             viewModel.deleteTasks(selectedTaskIds.toList())
                             selectedTaskIds = emptySet()
@@ -82,28 +93,54 @@ fun TasksScreen(viewModel: NoteViewModel) {
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(tasks, key = { it.id }) { task ->
-                        TaskItem(
-                            task = task,
-                            isSelected = selectedTaskIds.contains(task.id),
-                            isSelectionMode = isSelectionMode,
-                            onClick = {
-                                if (isSelectionMode) {
-                                    selectedTaskIds = if (selectedTaskIds.contains(task.id)) {
-                                        selectedTaskIds - task.id
+                    if (pinnedTasks.isNotEmpty()) {
+                        item {
+                            Text("PINNED", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelMedium)
+                            Spacer(modifier = Modifier.height(4.dp))
+                        }
+                        items(pinnedTasks, key = { it.id }) { task ->
+                            TaskItem(
+                                task = task,
+                                isSelected = selectedTaskIds.contains(task.id),
+                                isSelectionMode = isSelectionMode,
+                                onClick = {
+                                    if (isSelectionMode) {
+                                        selectedTaskIds = if (selectedTaskIds.contains(task.id)) selectedTaskIds - task.id else selectedTaskIds + task.id
                                     } else {
-                                        selectedTaskIds + task.id
+                                        viewModel.toggleTask(task)
                                     }
-                                } else {
-                                    viewModel.toggleTask(task)
+                                },
+                                onLongClick = {
+                                    if (!isSelectionMode) selectedTaskIds = setOf(task.id)
                                 }
-                            },
-                            onLongClick = {
-                                if (!isSelectionMode) {
-                                    selectedTaskIds = setOf(task.id)
+                            )
+                        }
+                    }
+                    if (regularTasks.isNotEmpty()) {
+                        if (pinnedTasks.isNotEmpty()) {
+                            item { Spacer(modifier = Modifier.height(8.dp)) }
+                        }
+                        item {
+                            Text("TASKS", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelMedium)
+                            Spacer(modifier = Modifier.height(4.dp))
+                        }
+                        items(regularTasks, key = { it.id }) { task ->
+                            TaskItem(
+                                task = task,
+                                isSelected = selectedTaskIds.contains(task.id),
+                                isSelectionMode = isSelectionMode,
+                                onClick = {
+                                    if (isSelectionMode) {
+                                        selectedTaskIds = if (selectedTaskIds.contains(task.id)) selectedTaskIds - task.id else selectedTaskIds + task.id
+                                    } else {
+                                        viewModel.toggleTask(task)
+                                    }
+                                },
+                                onLongClick = {
+                                    if (!isSelectionMode) selectedTaskIds = setOf(task.id)
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
             }

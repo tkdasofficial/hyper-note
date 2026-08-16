@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks ORDER BY isCompleted ASC, lastModified DESC")
+    @Query("SELECT * FROM tasks ORDER BY isPinned DESC, isCompleted ASC, lastModified DESC")
     fun getAllTasks(): Flow<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -23,4 +23,7 @@ interface TaskDao {
     
     @Query("DELETE FROM tasks WHERE id IN (:ids)")
     suspend fun deleteTasks(ids: List<Int>)
+
+    @Query("UPDATE tasks SET isPinned = :isPinned WHERE id IN (:ids)")
+    suspend fun updatePinnedStatus(ids: List<Int>, isPinned: Boolean)
 }

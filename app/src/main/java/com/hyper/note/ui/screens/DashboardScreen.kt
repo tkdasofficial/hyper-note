@@ -81,11 +81,12 @@ fun DashboardScreen(
                         }
                     },
                     actions = {
+                        val areAllSelectedPinned = selectedNoteIds.all { id -> activeNotes.find { it.id == id }?.isPinned == true }
                         IconButton(onClick = {
-                            viewModel.pinNotes(selectedNoteIds.toList(), true)
+                            viewModel.pinNotes(selectedNoteIds.toList(), !areAllSelectedPinned)
                             selectedNoteIds = emptySet()
                         }) {
-                            Icon(Icons.Default.PushPin, contentDescription = "Pin selected")
+                            Icon(Icons.Default.PushPin, contentDescription = if (areAllSelectedPinned) "Unpin selected" else "Pin selected")
                         }
                         IconButton(onClick = { showMoveDialog = true }) {
                             Icon(Icons.Default.DriveFileMove, contentDescription = "Move selected")
@@ -189,18 +190,6 @@ fun DashboardScreen(
                             Text("All", fontSize = 13.sp, color = if (selectedFolderId == null) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
-                                .clickable { onNavigateToFolders() },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(Icons.Default.Folder, contentDescription = "Folders", modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    }
                     items(folders, key = { it.id }) { folder ->
                         Box(
                             modifier = Modifier
@@ -212,6 +201,18 @@ fun DashboardScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(folder.name, fontSize = 13.sp, color = if (selectedFolderId == folder.id) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .clickable { onNavigateToFolders() },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(Icons.Default.Folder, contentDescription = "Folders", modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -228,8 +229,10 @@ fun DashboardScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            if (isSearching) "No notes matching '$searchQuery' found." else "No notes yet. Tap '+' to capture your first thought.",
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            text = if (isSearching) "No notes matching '$searchQuery' found." else "No notes yet. Tap '+' to capture your first thought.",
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 32.dp)
                         )
                     }
                 }
