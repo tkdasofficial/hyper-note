@@ -180,7 +180,6 @@ fun DashboardScreen(
                         Box(
                             modifier = Modifier
                                 .height(32.dp)
-                                .padding(end = 8.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(if (selectedFolderId == null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant)
                                 .clickable { viewModel.setSelectedFolder(null) }
