@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build Release APK
+    name: Build and Upload Release APK
     runs-on: ubuntu-latest
 
     steps:
